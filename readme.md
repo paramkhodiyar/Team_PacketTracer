@@ -38,11 +38,14 @@ Our local area network utilizes a completely private test namespace (`app.packet
 3. **HTTPS Request (Mac 2)** catches the traffic via Nginx, terminates the TLS 1.3 encryption, and proxies the request.
 4. **Backend A (Mac 3) or Backend B (Mac 4)** receives the load-balanced HTTP request and returns the JSON payload.
 
+### System Architecture Diagram
+![System Architecture Diagram](docs/sys_arch.png)
+
 ### Topology Diagram
-![Topology Diagram](docs/topology_diagram.png)
+![Topology Diagram](docs/topology.png)
 
 ### Request Flow Diagram
-![Request Flow Diagram](docs/request_flow.png)
+![Request Flow Diagram](docs/req_flow.png)
 
 ## 2. Configuration Bundle
 
