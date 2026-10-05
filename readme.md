@@ -9,7 +9,7 @@ This repository contains the configuration, source code, and evidence for a 4-no
 | **Mac 1** | DNS Server & Client | `10.7.5.135` | `en0` | `dnsmasq`, `dig`, `curl`, Wireshark |
 | **Mac 2** | Edge Reverse Proxy | `10.7.19.241` | `en0` | `nginx`, TLS Certificates |
 | **Mac 3** | Backend Node A | `10.7.3.16` | `en0` | Node.js API (Port 3001) |
-| **Mac 4** | Backend Node B | `[Mac 4 IP]` | `en0` | Node.js API (Port 3001) |
+| **Mac 4** | Backend Node B | `10.7.5.26` | `en0` | Node.js API (Port 3001) |
 
 ## 1. Architecture & Request Flow
 
@@ -19,7 +19,11 @@ Our local area network utilizes a completely private test namespace (`app.packet
 3. **HTTPS Request (Mac 2)** catches the traffic via Nginx, terminates the TLS 1.3 encryption, and proxies the request.
 4. **Backend A (Mac 3) or Backend B (Mac 4)** receives the load-balanced HTTP request and returns the JSON payload.
 
-*(Note: See `/docs/topology_diagram.png` and `/docs/request_flow.png` for visual architecture).*
+### Topology Diagram
+![Topology Diagram](docs/topology_diagram.png)
+
+### Request Flow Diagram
+![Request Flow Diagram](docs/request_flow.png)
 
 ## 2. Configuration Bundle
 
