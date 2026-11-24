@@ -1,10 +1,11 @@
-+ set -e
-+++ dirname ./test_phase2.sh
-++ cd .
-++ pwd
-+ SIM_DIR=/Users/aditsingh/phase2_sim
-+ DNSMASQ_BIN=/opt/homebrew/sbin/dnsmasq
-+ NGINX_BIN=/opt/homebrew/bin/nginx
-+ '[' '!' -x /opt/homebrew/bin/nginx ']'
-++ command -v nginx
-+ NGINX_BIN=
+=================================================================
+=== Extension A: Primary and Backup DNS Resolution & Failover ===
+=================================================================
+[+] Querying Primary DNS (127.0.0.11):
+127.0.0.12
+[+] Querying Backup DNS (127.0.0.14):
+
+; <<>> DiG 9.10.6 <<>> @127.0.0.14 app.packettracers.test +short
+; (1 server found)
+;; global options: +cmd
+;; connection timed out; no servers could be reached
