@@ -4,8 +4,65 @@
 [+] Querying Primary DNS (127.0.0.11):
 127.0.0.12
 [+] Querying Backup DNS (127.0.0.14):
+127.0.0.12
+[+] Stopping Primary DNS...
+[+] Verifying Backup DNS still resolves:
+127.0.0.12
+[+] Restarting Primary DNS for subsequent tests...
 
-; <<>> DiG 9.10.6 <<>> @127.0.0.14 app.packettracers.test +short
-; (1 server found)
-;; global options: +cmd
-;; connection timed out; no servers could be reached
+=================================================================
+=== Extension B: DNS TTL Verification (30 Seconds) =============
+=================================================================
+app.packettracers.test.	30	IN	A	127.0.0.12
+
+=================================================================
+=== Extension C: Packet Filter (pf) Firewall Rules ==============
+=================================================================
+[+] Backing up current pf rules to pf_backup.rules...
+[+] Creating and loading temporary pf rules for lo0...
+[+] Testing direct access from 127.0.0.11 to Backend A (should be blocked):
+[+] Direct access successfully blocked by pf
+[+] Testing proxied access via Edge Proxy 127.0.0.12 (should be allowed):
+{"backend": "B", "status": "ok"}
+
+[+] Restoring pf rules from backup...
+[+] pf rules restored.
+
+=================================================================
+=== Extension D: Load Balancing and Backend Failover ============
+=================================================================
+[+] Querying Edge Proxy 6 times to show A/B alternation:
+{"backend": "A", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "A", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "A", "status": "ok"}
+{"backend": "B", "status": "ok"}
+
+[+] Stopping Backend A (127.0.0.13)...
+[+] Querying Edge Proxy 4 times (all traffic should route to Backend B):
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+
+[+] Restarting Backend A (127.0.0.13)...
+[+] Verifying Backend A is back in rotation:
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+{"backend": "B", "status": "ok"}
+
+=================================================================
+=== Extension E: Standby Edge Proxy Activation & DNS Migration ==
+=================================================================
+[+] Starting Standby Edge Proxy on 127.0.0.14:443...
+[+] Updating DNS configuration to point to Standby Edge (127.0.0.14)...
+[+] Reloading dnsmasq instances...
+[+] DNS resolution now yields: 127.0.0.14
+[+] Verifying curl connects to Standby Edge (127.0.0.14):
+* Connected to app.packettracers.test (127.0.0.14) port 443
+< X-Backend: A
+[+] Reverting DNS configuration to Primary Edge (127.0.0.12)...
+[+] Stopping Standby Edge Proxy...
+[+] Extension E complete.

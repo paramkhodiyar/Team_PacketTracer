@@ -203,3 +203,15 @@ aditsingh@Adits-MacBook-Pro-2 ~ % dig @8.8.8.8 app.packettracers.test
 
 ;; SERVER: 8.8.8.8#53(8.8.8.8)
 ```
+
+---
+
+## Phase 2: Harden & Recover
+
+Phase 2 builds upon the foundational multi-node architecture of Phase 1, transitioning to a high-availability, zero-trust virtual simulation on macOS loopback aliases (`lo0`: `127.0.0.11`–`127.0.0.14`). This phase introduces dual DNS resolvers, aggressive TTL tuning (30s), Nginx passive health checks with failure cooldowns, `pf` micro-segmentation, and active-passive standby edge migration.
+
+- **Final Documentation & Architectural Analysis**: [docs/Phase2_Final_Report.md](docs/Phase2_Final_Report.md)
+- **Configuration Bundle (DNS & Nginx)**: [config/phase2/](config/phase2/)
+- **Test Transcripts & Verification Evidence**: [evidence/phase2/](evidence/phase2/)
+- **Simulation Control Scripts & Python API**: [backend/](backend/)
+
