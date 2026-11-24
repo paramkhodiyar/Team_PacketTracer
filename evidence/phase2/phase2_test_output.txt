@@ -1,0 +1,10 @@
++ set -e
++++ dirname ./test_phase2.sh
+++ cd .
+++ pwd
++ SIM_DIR=/Users/aditsingh/phase2_sim
++ DNSMASQ_BIN=/opt/homebrew/sbin/dnsmasq
++ NGINX_BIN=/opt/homebrew/bin/nginx
++ '[' '!' -x /opt/homebrew/bin/nginx ']'
+++ command -v nginx
++ NGINX_BIN=
